@@ -1,0 +1,311 @@
+1. laptop-mode-tools
+laptop-mode /etc/laptop-mode/...    .conf 
+auto-hibernate.conf
+cat /proc/sys/vm/laptop_mode
+acpi to view battery status, fans ,,,....
+
+2. network
+/etc/network/interfaces
+wap_supplicant
+firmware-iwl
+wpa_passphrase 
+
+ifconfig, iwconfig needs root accout; locates in /usr/sbin 
+
+ifconfig eth0 192.168.1.1 netmask 255.255.255.0 
+route add default gw 192.168.1.1
+
+ip link set wlan0 up
+iwconfig wlan0 power on
+iwconfig wlan0 txpower auto
+
+dhclient wlan0
+
+man wireless
+man interfaces
+
+3. $(HOME)/.bashrc
+set alias 
+and $PS1
+
+4. man pager = less , -P parameter can select pager program.
+need install less.
+
+5. apt-get install
+/etc/apt/sources.list
+deb mirrors.163.com/debian /squeeze main contrib non-free
+
+6. man bash
+HOME/profile .bashrc , /etc/
+
+7. /etc/init.d/...
+
+8. pw-utils package..
+pw-hibernate, pw-suspend 
+
+9. lynx 
+
+10. debian iso usb boot
+cat file.iso > /dev/sdX
+
+11. ifup, ifdown ==> call ifconfig,route;
+based on the /etc/network/interfaces.
+man ifup interfaces
+status :  /etc/network/run/state
+
+12. apt-get install linux-doc-html
+install HOWTOs
+
+13. apt-get install xorg xterm xclock xpdf
+xinit
+
+14. pdf in console 
+linux frame buffer
+/etc/default/grub 
+GRUB_GFXMODE=640x480
+GRUB_GFXPAYLOAD_LINUX=keep
+
+update-grub
+
+/boot/grub/grub.cfg
+
+
+install fbgs to view the pdf in console.
+
+if in X, use xpdf
+
+
+2. X, install X and mplayer
+xorg documentation 
+apt-get install xorg xinit twm xterm xclock X11-common X11-utils
+...
+
+$(HOME)/.xsession
+
+xterm&
+exec twm
+
+3. how to auto connect wifi?
+/etc/network/interfaces
+use the wpa-* option
+
+/usr/share/doc/wpasupplicant/README.debain.gz
+
+4. boot up hdcp dicovery, make slow bootup
+disable hdcp... use static ip addr
+
+
+1. display chinese
+dpkg-reconfigure locales
+select the zh_CN and ...
+
+install chinese fonts
+
+xfonts-wqy
+search xfonts in apt
+
+for xfce4,  can install the xfce4-terminal.
+
+firefox --> preference. set the language and default character encoding
+
+
+2. chinese input method
+ibus ibus-pinyin
+ibus-setup
+ibus-daemon -drx
+
+if using startx, can use im-config to config the im
+if using startxfce4, copy the /etc/xdg/xfce4/xinitrc to $(HOME)/.config/xfce4/xinitrc, and put the following scripts into it:
+
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT_IM_MODULE=ibus
+ibus-daemon -drx
+
+notice:!!! put it before the xfce4-session
+
+3. grub rescue. file not found
+assue grub is installed in (hd0,7)
+
+set root=(hd0,7)
+set prefix=(hd0,7)/boot/grub
+insmod /boot/grub/normal.mod
+normal
+
+here may be change the kernel's partition, if partition table is changed..
+
+after boot into linux,
+
+update-grub
+grub-install /dev/sda
+
+
+=======
+20130319
+
+1. setup the console font
+/etc/default/console-setup
+setupcon
+
+
+setfont 
+/usr/share/consolefonts
+
+2. frame buffer
+
+3. console screen resolution
+
+4. sed replace
+/  or  @ or :
+sed 's@/path/to/somewhere@another/&@' src
+sed 's:/path/to/somewhere:another/&:' src
+
+
+20130420
+1. vim clipboard.  reg + and *
+not supported...   
+vim --version | grep xterm_clipboard
+
+apt-get remove vim
+compile & install vim
+
+read README.txt and README_unix.txt
+./configure --help
+edit the src/Makefile
+
+apt-get install libncurses5-dev
+apt-get install libgtk2.0-dev libatk1.0-dev libx11-dev libxt-dev
+
+
+make distclean
+./configure --with-features=big --enable-gui=gtk2 --with-x
+make
+sudo make install
+
+uninstall:
+sudo make uninstall
+
+
+also can try:
+sudo apt-get install vim-gnome
+2. mount --bind
+mount --bind fol1 fol2 
+fol1 will be mirrored to fol2. 
+umount fol1 will release the binding.
+
+3. mknod 
+crate the device node.
+mknod -m <mode> path/name c/b <major> <minor>
+eg. mknod -m 666 /dev/null c 1 3
+c: charater device
+b: block device
+fol2 w
+
+
+4. swap
+swapon -s  to view the status of swap usage
+swapon -a turn on all swap
+
+/etc/fstab
+UUID can be refered by blkid command
+or list the files of /dev/disk/by-uuid
+
+5. install firefox 
+download the binary package from website
+unpack & uncompress it. cp to the dir. such as /opt/firefox
+create a link in the /usr/bin
+
+6. install flash player plugin of firefox
+read the readme!
+cp the lib to firefox/plugins
+cp the usr to /usr
+
+
+-----------------------
+20130421
+
+1. df -h  to show the file system mounting info.
+du   to show the file/directory usage;
+e.g. du -h -d1 .
+
+2. 
+虚拟文件设备 通过文件系统接口来与内核交互； 设备文件
+
+devpts pseudo terminal 
+proc fs  kernel information. processes, etc... 
+
+cat /proc/cpuinfo
+cat /proc/meminfo
+cat /proc/mounts
+cat /proc/modules
+
+...
+
+sysfs,  
+
+3. mount -t 
+filesystem : see "man mount" 
+
+3. chmod
+user, group, others.
+u,g,o,a +-= rwx
+12bits
+suid, guid. 
+process acess resource: euid, egid
+suid set: euid==file owner's uid.  e.g. passwd, sudo
+	suid unset: euid == process exeuting user id.
+sticky: folder A with sticky bit set, then only owner or root is permitted to
+delete files in folder A.
+
+
+
+4. UID, GID
+/etc/passwd, /etc/group
+
+5. exec fork source
+exec: terminate the orignal process
+fork: sub process then return to parent process
+source: no sub process.
+ 
+6. bash 2>&1
+REDIRECTION:
+file description: 0: stdin, 1: stdout, 2: stderr
+> means stdout and stderr
+i>&j 将文件标示符i重定向到 j
+j<>filename 打开文件并指定标示符j
+&- 关闭文件标示符
+
+e.g. make -k check 2>&1 | tee glibc-check-log
+
+pipe: |& or 2>&1  standard error of cmd1 ===> standard input of cmd2
+
+7. tee
+std output  and file
+
+8. nsswitch.conf
+method[[action]]
+
+9. awk
+
+10. df  -- view the partition usage
+
+
+11. brightness adjustment:
+/sys/class/backlight/acpi_video0/brightness
+
+
+12. awsome tool: screen;
+copy C-a [     hlkj move, space to tag the beginning and end. C-a ] to paste...
+ this buffer can be shared with windows in a same screen session. good!
+help: C-a ?
+
+13. terminal shortcuts
+   c-k   cut from cursor to beginning
+   c-u  cut to end of line
+   c-y   paste
+   c-r   search history
+ sudo !! ---- sudo last command.
+   
+   
+
+14. fc-list  list fonts
