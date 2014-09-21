@@ -309,3 +309,12 @@ help: C-a ?
    
 
 14. fc-list  list fonts
+
+
+20140921
+1. git 
+git remote : add 增加的是一个名字 标签 指向的是远程的repo
+
+
+
+
