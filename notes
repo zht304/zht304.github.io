@@ -313,8 +313,53 @@ help: C-a ?
 
 20140921
 1. git 
+git clone  https://github.com/zht304/dotfiles.git // clone a remote repo
 git remote : add 增加的是一个名字 标签 指向的是远程的repo
 
+git remote -v     		// list remote info
+git remote show origin  // show detailed info of origin
 
+git commit -m 'a' 
+git add new_changes_b 
+git commit --amend 		// amend new_changes_b to 'a' 
 
+git clone后默认remote名字为origin  
+git fetch zilongshanren 从zilongshanren的remote下获取最新修改 
+但不会自动merge到本地的仓库；
+remote branch, eg. zilongshanren/master 
+
+git pull 				// 自动fetch并merge到本地 相当于 git fetch ;  git merge
+git pull 需先绑定一个分支来track remote的branch； 
+git clone 这个动作隐含的做了这样的动作: 用master track remote master
+
+git push origin master 	// push local mater branch to origin
+疑问： 如果remote多branch 是如何push的 ? ：
+answer: git push origin dev:master 	// local dev -> remote master
+
+git remote show origin	// show detailed info the remote such as remote branch...
+git push origin dev:dev // local dev -> remote dev
+git push origin :dev 	// delete remote branch dev
+
+git commit -a -m 'cmmt"	// auto commit the tracked & changed files
+						// after added, a file will be tracked..
+
+git log					// show commit log
+git log --pretty=oneline	// one line each
+git status				// status of current repo
+git diff				// diff the working with repo
+git diff filex			// diff filex
+git branch				// show branchs
+git branch newb			// create branch newb
+git checkout newb		// swith to newb
+
+git checkout -- filex	// revert the filex to the status while the last add / commit
+
+//reset is like 'rollback'   --hard, --soft , --mix
+git reset --hard 		// IT'S DANGEROUS!!! will lose working changes and maybe lose the commit...
+git reflog				// show the auto-saved ref log. can use to find and reset back the commit.
+git reset HEAD
+git reset HEAD xfile	// reset to HEAD
+git reset HEAD^ 		// reset one commit before HEAD
+git reset HEAD^^
+git reset HEAD~5
 
