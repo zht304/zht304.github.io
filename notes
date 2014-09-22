@@ -363,3 +363,34 @@ git reset HEAD^ 		// reset one commit before HEAD
 git reset HEAD^^
 git reset HEAD~5
 
+git checkout -b newb2	// create and switch to newb2
+
+git merge newb			// merge newb to current branch. move the pointer..
+git merge --no-ff newb	// disable fast forward. NOT only move the pointer. 
+						// but also keep the merge history as a commit. like P4 merge..
+
+git stash				// stash working dir 
+git stash list
+git stash apply 		// restore the stash, still keep the stash
+git stash apply stash@{0} 
+git stash pop			// apply and del the stash
+
+
+通常的步骤
+master ---> 稳定分支 发布版本
+dev   --> 用于开发
+merge dev-> master // 合并修改 release 版本
+tag // tag版本
+
+checkout dev 
+git status
+stash  // 暂存未完成的修改
+checkout master // 切到分支，里面没有自己的修改, 如 master
+checkout -b bug-22 // 切到新建的branch
+do fixes..
+commit
+checkout dev //
+merge bug-22 // merge到oev
+branch -d bug-22 // del
+stash apply // 恢复暂存
+
