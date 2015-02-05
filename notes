@@ -400,3 +400,7 @@ stash apply // 恢复暂存
 20140924:
 sudo: unable to resolve host 
 | add the host name to /etc/hosts
+
+
+2015.2.5.
+winscp -- transfer file between linux & windows
