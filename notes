@@ -390,11 +390,12 @@ checkout -b bug-22 // 切到新建的branch
 do fixes..
 commit
 checkout dev //
-merge bug-22 // merge到oev
+merge bug-22 // merge到dev
 branch -d bug-22 // del
 stash apply // 恢复暂存
 
 
+git diff origin // diff remote origin with ...?
 
 
 20140924:
@@ -404,3 +405,8 @@ sudo: unable to resolve host
 
 2015.2.5.
 winscp -- transfer file between linux & windows
+
+
+2015.7.2
+hex->dec
+echo "ibase=16;obase=A;3E8" | bc
